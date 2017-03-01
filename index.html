@@ -1,0 +1,40 @@
+<html>
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script language="javascript" type="text/javascript" src="lib/socket.io.js"></script>
+  <script language="javascript" type="text/javascript" src="client.js"></script>
+</head>
+<body>
+<h1 id="waiting">Waiting for game to start...</h1>
+<form id="ready">
+  <input type="submit">
+</form>
+  <div id="namecompany">
+  <table>
+  <tr>
+  <th>Full Name</th>
+  <th>Stock Identifier</th>
+</tr>
+  <th>
+      <input id="name" type="text" />
+  </th>
+  <th>
+    <input id="identifier" type="text" />
+  </th>
+</table>
+  <button id="namesub">Name Company</button>
+</div>
+<div id="game">
+  <table id="market">
+    <tr>
+      <th>Stock Identifier</th>
+      <th>Total Value</th>
+      <th>Stock Price</th>
+    </tr>
+  </table>
+  <table id="ownedShares">
+  </table>
+</div>
+
+</body>
+</html>
