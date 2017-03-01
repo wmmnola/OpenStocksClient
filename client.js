@@ -25,6 +25,7 @@ function main() {
 
   socket.on("NameRequest", showNameRequest);
   socket.on("sendData", mainGamePhase);
+  $(".endTurn").click(endTurnHandler);
 
 }
 
@@ -55,15 +56,27 @@ function showNameRequest(data) {
 }
 
 function mainGamePhase(data) {
-  companies = data.companies;
+  $("#market").empty();
   $("#namecompany").hide();
+  companies = data.companies;
+  playerCompany = data.playerCompany;
+  $(".companyName").text(playerCompany.name);
+  $("#market").append('<tr>' +
+    '<th id="marketIden">Stock Identifier</th>' +
+    '<th id="marketValue" >Total Value</th>' +
+    '<th id="marketStock">Stock Price</th> ' +
+    '<th id="action">Action</th>' + "</tr>"
+  );
   for (var i = 0; i < companies.length; i++) {
+    var button = "";
+    if (companies[i].identifer != playerCompany.identifer) {
+      button = '<td><button id=' + companies[i].identifer +
+        '>buy</button></td>';
+    }
     $('#market').append('<tr><td>' + companies[i].identifer + '</td><td>' +
-      companies[i].value + '</td><td>' + companies[i].sharevalue +
-      '</td><td><button id=' + companies[i].identifer + '>buy</button>' +
-      '</td></tr>');
-    $('#' + companies[i].identifer).click(buyStockHandler);
-    console.log(companies[i].identifer + " added");
+      companies[i].value + '</td><td>' + companies[i].sharevalue + '</td>' +
+      button + '</tr>');
+    if (button != "") $('#' + companies[i].identifer).click(buyStockHandler);
   }
   $("#game").show();
 }
@@ -81,4 +94,13 @@ function find_by_identifer(iden) {
     if (companies[i].identifer == iden) return companies[i];
   }
   throw "Fatal Error, identifer is not valid";
+}
+
+function endTurnHandler(event) {
+  event.stopPropagation();
+  var payload = {
+    id: id,
+    orders: []
+  };
+  socket.emit("endTurn", payload);
 }
