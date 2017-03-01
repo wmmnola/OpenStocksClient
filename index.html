@@ -3,6 +3,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script language="javascript" type="text/javascript" src="lib/socket.io.js"></script>
   <script language="javascript" type="text/javascript" src="client.js"></script>
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
 </head>
 <body>
 <h1 id="waiting">Waiting for game to start...</h1>
@@ -25,11 +26,11 @@
   <button id="namesub">Name Company</button>
 </div>
 <div id="game">
-  <table id="market">
+  <table id="market" class="market">
     <tr>
-      <th>Stock Identifier</th>
-      <th>Total Value</th>
-      <th>Stock Price</th>
+      <th id="marketIden">Stock Identifier</th>
+      <th id="marketValue" >Total Value</th>
+      <th id="marketStock">Stock Price</th>
     </tr>
   </table>
   <table id="ownedShares">
