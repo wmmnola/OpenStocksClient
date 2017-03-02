@@ -7,17 +7,19 @@ function buyStockHandler(event) {
   if (!order) {
     order = new Order(toBuy);
   }
-  var total = parseFloat(total_orders() + order.priceOfOne());
-  if (total <= playerCompany.money) {
-    $("." + toBuy.identifer + "buy").remove();
-    order.buy();
-    if (!find_order(toBuy)) orders.push(order);
-    $('.' + toBuy.identifer).append("<td class=" + toBuy.identifer + "buy>" +
-      order.buyAmount + " </td>");
-    $('.numboughtshares').text(num_orders());
-    $(".costboughtshares").text(total_orders());
-  } else {
-    window.alert("not enough money");
+  if (order.priceOfOne() > 0) {
+    var total = parseFloat(total_orders() + order.priceOfOne());
+    if (total <= playerCompany.money) {
+      $("." + toBuy.identifer + "buy").remove();
+      order.buy();
+      if (!find_order(toBuy)) orders.push(order);
+      $('.' + toBuy.identifer).append("<td class=" + toBuy.identifer + "buy>" +
+        order.buyAmount + " </td>");
+      $('.numboughtshares').text(num_orders());
+      $(".costboughtshares").text(total_orders());
+    } else {
+      window.alert("not enough money");
+    }
   }
 
 
@@ -25,6 +27,7 @@ function buyStockHandler(event) {
 
 function endTurnHandler(event) {
   event.stopPropagation();
+  $(".endTurn").hide();
   var payload = {
     id: id,
     orders: orders
@@ -70,6 +73,11 @@ function num_orders() {
   return sum;
 }
 
+function stockUpdateHandler(com) {
+  for (var i = 0; i < com.length; i++) {
+    $("." + com[i].identifer + "_amount").text(com[i].selfOwnedSock.length);
+  }
+}
 
 function total_orders() {
   var sum = 0;

@@ -9,12 +9,13 @@ function main() {
   $("#namecompany").hide();
   $("#waiting").hide();
   $("#game").hide();
-  console.log("loaded");
-  socket = io('http://localhost:3000');
-  id = socket.id;
-  console.log(socket.id);
   $("#ready").submit(function(event) {
     event.preventDefault();
+    event.stopPropagation();
+    socket = io('http://localhost:3000');
+    socket.on("NameRequest", showNameRequest);
+    socket.on("sendData", mainGamePhase);
+    socket.on("stockUpdate", stockUpdateHandler);
     console.log("pressed");
     var data = {
       role: "player"
@@ -24,8 +25,7 @@ function main() {
     $("#waiting").show();
   });
 
-  socket.on("NameRequest", showNameRequest);
-  socket.on("sendData", mainGamePhase);
+
   $(".endTurn").click(endTurnHandler);
 
 }
@@ -41,6 +41,7 @@ function showNameRequest(data) {
 function mainGamePhase(data) {
   orders = []
   $("#market").empty();
+
   $("#namecompany").hide();
   companies = data.companies;
   playerCompany = data.playerCompany;
@@ -53,7 +54,9 @@ function mainGamePhase(data) {
     '<th id="marketIden">Stock Identifier</th>' +
     '<th id="marketValue" >Total Value</th>' +
     '<th id="marketStock">Stock Price</th> ' +
-    '<th id="action">Action</th>' + "</tr>"
+    '<th id="stockAmount">Amount of Stock</th>' +
+    '<th id="action">Action</th>' +
+    "</tr>"
   );
   for (var i = 0; i < companies.length; i++) {
     var button = "";
@@ -63,8 +66,11 @@ function mainGamePhase(data) {
     }
     $('#market').append('<tr class=' + companies[i].identifer + '><td>' +
       companies[i].identifer + '</td><td>' + companies[i].value + '</td><td>' +
-      companies[i].sharevalue + '</td>' + button + '</tr>');
+      companies[i].sharevalue + '</td><td><p class=' +
+      companies[i].identifer + '_amount>' + companies[i].selfOwnedSock.length +
+      '</p></td>' + button + '</tr>');
     if (button != "") $('#' + companies[i].identifer).click(buyStockHandler);
   }
   $("#game").show();
+  $(".endTurn").show();
 }
