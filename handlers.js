@@ -1,28 +1,33 @@
 function buyStockHandler(event) {
 
-  console.log("working?");
   event.stopPropagation();
   console.log(event.target.id);
   var toBuy = find_by_identifer(event.target.id);
-  $("." + toBuy.identifer + "buy").remove();
-  console.log(toBuy);
-  var order = find_order(toBuy)
-  if (order) {
-    order.buy();
-  } else {
+  var order = find_order(toBuy);
+  if (!order) {
     order = new Order(toBuy);
-    order.buy();
-    orders.push(order);
   }
-  $('.' + toBuy.identifer).append("<td class=" + toBuy.identifer + "buy>" +
-    order.buyAmount + " </td>");
+  var total = parseFloat(total_orders() + order.priceOfOne());
+  if (total <= playerCompany.money) {
+    $("." + toBuy.identifer + "buy").remove();
+    order.buy();
+    if (!find_order(toBuy)) orders.push(order);
+    $('.' + toBuy.identifer).append("<td class=" + toBuy.identifer + "buy>" +
+      order.buyAmount + " </td>");
+    $('.numboughtshares').text(num_orders());
+    $(".costboughtshares").text(total_orders());
+  } else {
+    window.alert("not enough money");
+  }
+
+
 }
 
 function endTurnHandler(event) {
   event.stopPropagation();
   var payload = {
     id: id,
-    orders: []
+    orders: orders
   };
   socket.emit("endTurn", payload);
 }
@@ -54,4 +59,23 @@ function find_order(company) {
     if (orders[i].company == company) return orders[i];
   }
   return false;
+}
+
+function num_orders() {
+  var sum = 0;
+  for (var i = 0; i < orders.length; i++) {
+    sum += parseFloat(orders[i].buyAmount);
+  }
+  console.log(sum);
+  return sum;
+}
+
+
+function total_orders() {
+  var sum = 0;
+  for (var i = 0; i < orders.length; i++) {
+    sum += parseFloat(orders[i].total);
+  }
+  console.log(sum);
+  return sum;
 }

@@ -2,6 +2,7 @@ var socket;
 var id;
 var companies;
 var orders = [];
+var playerCompany;
 $(document).ready(main);
 
 function main() {
@@ -35,16 +36,19 @@ function showNameRequest(data) {
   console.log("got request");
   $("#namecompany").show();
   $("#namesub").click(nameMyCompany);
-  return false;
 }
 
 function mainGamePhase(data) {
+  orders = []
   $("#market").empty();
   $("#namecompany").hide();
   companies = data.companies;
   playerCompany = data.playerCompany;
-  $(".companyName").text(playerCompany.name + "value: " + playerCompany.value +
-    " money: " + playerCompany.money);
+  $(".companyValue").text(playerCompany.value);
+  $(".companyName").text(playerCompany.name);
+  $(".companyMoney").text(playerCompany.money);
+  $('.numboughtshares').text("0");
+  $(".costboughtshares").text("0");
   $("#market").append('<tr>' +
     '<th id="marketIden">Stock Identifier</th>' +
     '<th id="marketValue" >Total Value</th>' +

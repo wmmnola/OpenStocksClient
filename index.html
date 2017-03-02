@@ -30,8 +30,8 @@
 <div id="game">
   <div class="company info">
     <h3 class="companyName"></h3>
-    <p class="value"></p>
-    <p class="money"></p>
+    <p class="companyValue"></p>
+    <p class="companyMoney"></p>
   </div>
   <div class="market">
     <h4>The Market</h4>
@@ -40,7 +40,19 @@
   </div>
   <table id="ownedShares">
   </table>
-  <button class="endTurn">End Turn</button>
+  <div class="end">
+    <table>
+      <tr>
+        <th>Number of Shares bought</th>
+        <th>Cost of bought shares</th>
+      </tr>
+      <tr>
+        <td><p class="numboughtshares"></p></td>
+        <td><p class="costboughtshares"></p></td>
+        <td><button class="endTurn">End Turn</button></td>
+      </tr>
+    </table>
+  </div>
 </div>
 
 </body>
