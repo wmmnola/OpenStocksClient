@@ -11,5 +11,9 @@ var Order = function(company) {
   this.priceOfOne = function() {
     return parseFloat(this.company.sharevalue);
   }
+  this.print_order = function() {
+    console.log(this.buyAmount + " of stock at " + this.company.sharevalue +
+      " for a total of " + this.total);
+  }
 
 }

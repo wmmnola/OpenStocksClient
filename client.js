@@ -64,6 +64,7 @@ function mainGamePhase(data) {
       button = '<td><button id=' + companies[i].identifer +
         '>buy</button></td>';
     }
+    console.log(companies[i]);
     $('#market').append('<tr class=' + companies[i].identifer + '><td>' +
       companies[i].identifer + '</td><td>' + companies[i].value + '</td><td>' +
       companies[i].sharevalue + '</td><td><p class=' +
