@@ -1,6 +1,7 @@
 var socket;
 var id;
 var companies;
+var orders = [];
 $(document).ready(main);
 //main();
 
@@ -60,7 +61,8 @@ function mainGamePhase(data) {
   $("#namecompany").hide();
   companies = data.companies;
   playerCompany = data.playerCompany;
-  $(".companyName").text(playerCompany.name);
+  $(".companyName").text(playerCompany.name + "value: " + playerCompany.value +
+    " money: " + playerCompany.money);
   $("#market").append('<tr>' +
     '<th id="marketIden">Stock Identifier</th>' +
     '<th id="marketValue" >Total Value</th>' +
@@ -73,20 +75,32 @@ function mainGamePhase(data) {
       button = '<td><button id=' + companies[i].identifer +
         '>buy</button></td>';
     }
-    $('#market').append('<tr><td>' + companies[i].identifer + '</td><td>' +
-      companies[i].value + '</td><td>' + companies[i].sharevalue + '</td>' +
-      button + '</tr>');
+    $('#market').append('<tr class=' + companies[i].identifer + '><td>' +
+      companies[i].identifer + '</td><td>' + companies[i].value + '</td><td>' +
+      companies[i].sharevalue + '</td>' + button + '</tr>');
     if (button != "") $('#' + companies[i].identifer).click(buyStockHandler);
   }
   $("#game").show();
 }
 
 function buyStockHandler(event) {
+
   console.log("working?");
   event.stopPropagation();
   console.log(event.target.id);
   var toBuy = find_by_identifer(event.target.id);
+  $("." + toBuy.identifer + "buy").remove();
   console.log(toBuy);
+  var order = find_order(toBuy)
+  if (order) {
+    order.buy();
+  } else {
+    order = new Order(toBuy);
+    order.buy();
+    orders.push(order);
+  }
+  $('.' + toBuy.identifer).append("<td class=" + toBuy.identifer + "buy>" +
+    order.buyAmount + " </td>");
 }
 
 function find_by_identifer(iden) {
@@ -94,6 +108,13 @@ function find_by_identifer(iden) {
     if (companies[i].identifer == iden) return companies[i];
   }
   throw "Fatal Error, identifer is not valid";
+}
+
+function find_order(company) {
+  for (var i = 0; i < orders.length; i++) {
+    if (orders[i].company == company) return orders[i];
+  }
+  return false;
 }
 
 function endTurnHandler(event) {
