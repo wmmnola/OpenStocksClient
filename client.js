@@ -1,7 +1,7 @@
 var socket;
 var id;
 var companies;
-var orders = [];
+var buy_orders = [];
 var playerCompany;
 $(document).ready(main);
 
@@ -39,7 +39,7 @@ function showNameRequest(data) {
 }
 
 function mainGamePhase(data) {
-  orders = []
+  buy_orders = []
   $("#market").empty();
 
   $("#namecompany").hide();

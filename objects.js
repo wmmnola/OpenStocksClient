@@ -1,4 +1,4 @@
-var Order = function(company) {
+var Buy_Order = function(company) {
   this.company = company;
   this.buyAmount = 0;
   this.total = 0;
@@ -16,4 +16,16 @@ var Order = function(company) {
       " for a total of " + this.total);
   }
 
+}
+var Sell_Order = function(company) {
+  this.company = company;
+  this.sellAmount = 0;
+  this.total = 0;
+  this.sell = function() {
+    this.sellAmount += 1;
+    this.total = parseFloat(this.sellAmount * this.company.sharevalue);
+  }
+  this.priceOfOne = function() {
+
+  }
 }
