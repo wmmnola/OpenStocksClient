@@ -58,3 +58,10 @@ function parse_shares(company) {
   }
   console.log(records);
 }
+
+function find_sell_order(company) {
+  for (var i = 0; i < sell_orders.length; i++) {
+    if (sell_orders[i].company == company) return sell_orders[i];
+  }
+  return false;
+}

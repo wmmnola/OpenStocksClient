@@ -39,7 +39,8 @@ function showNameRequest(data) {
 }
 
 function mainGamePhase(data) {
-  buy_orders = []
+  buy_orders = [];
+  sell_orders = [];
   $("#market").empty();
 
   $("#namecompany").hide();
@@ -94,5 +95,6 @@ function create_report() {
       "</td><td>" + records[i].amount + "</td><td>" + records[i].full_value() +
       "</td><td><button class=" +
       records[i].company.identifer + "_sell>Sell</button>");
+    $("." + records[i].company.identifer + "_sell").click(sellHandler);
   }
 }

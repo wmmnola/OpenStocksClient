@@ -1,4 +1,5 @@
 var records = [];
+var sell_orders = [];
 
 function buyStockHandler(event) {
 
@@ -23,6 +24,32 @@ function buyStockHandler(event) {
       window.alert("not enough money");
     }
   }
+}
+
+function sellHandler(event) {
+  event.stopPropagation();
+  var id = (event.target.className).replace("_sell", "");
+  var company = find_by_identifer(id);
+  var record = find_record(company.identifer);
+  var order = find_sell_order(company);
+  $("." + company.identifer + "_amountSold").remove();
+  if (!order) {
+    order = new Sell_Order(company);
+  } else {
+    var i = sell_orders.indexOf(order);
+    sell_orders.splice(i, 1);
+  }
+  console.log(order);
+  console.log(record);
+  if (order.sellAmount < record.amount) {
+    order.sell();
+    sell_orders.push(order);
+    console.log(sell_orders)
+  } else {
+    $("." + company.identifer + "_sell").hide();
+  }
+  $("." + company.identifer + "_record").append("<td class=" + company.identifer +
+    "_amountSold><p>" + order.sellAmount + "</p></td>");
 }
 
 function endTurnHandler(event) {

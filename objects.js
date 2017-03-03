@@ -33,6 +33,6 @@ var Ownership_Record = function(company) {
   this.company = company;
   this.amount = 0;
   this.full_value = function() {
-    return this.amount * parseFloat(this.company.sharevalue);
+    return (this.amount * parseFloat(this.company.sharevalue)).toFixed(2);
   }
 }
