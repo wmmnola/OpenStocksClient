@@ -72,6 +72,27 @@ function mainGamePhase(data) {
       '</p></td>' + button + '</tr>');
     if (button != "") $('#' + companies[i].identifer).click(buyStockHandler);
   }
+  create_report();
   $("#game").show();
   $(".endTurn").show();
+}
+
+function create_report() {
+  $("#ownedShares").empty();
+  records = [];
+  console.log(records);
+  parse_shares(playerCompany);
+  $("#ownedShares").append(
+    "<tr><th>Company</th>" +
+    "<th>Share Price</th>" +
+    "<th>Stock Owned</th>" +
+    "<th>Value</th>" + "<th>Action</th></tr>");
+  for (var i = 0; i < records.length; i++) {
+    $("#ownedShares").append(
+      "<tr class=" + records[i].company.identifer + "_record><td>" +
+      records[i].company.identifer + "</td><td>" + records[i].company.sharevalue +
+      "</td><td>" + records[i].amount + "</td><td>" + records[i].full_value() +
+      "</td><td><button class=" +
+      records[i].company.identifer + "_sell>Sell</button>");
+  }
 }

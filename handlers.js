@@ -1,3 +1,5 @@
+var records = [];
+
 function buyStockHandler(event) {
 
   event.stopPropagation();
@@ -22,7 +24,6 @@ function buyStockHandler(event) {
     }
   }
 }
-
 
 function endTurnHandler(event) {
   event.stopPropagation();
@@ -49,49 +50,8 @@ function nameMyCompany(event) {
 
 }
 
-function find_by_identifer(iden) {
-  for (var i = 0; i < companies.length; i++) {
-    if (companies[i].identifer == iden) return companies[i];
-  }
-  throw "Fatal Error, identifer is not valid";
-}
-
-function find_order(company) {
-  for (var i = 0; i < buy_orders.length; i++) {
-    if (buy_orders[i].company == company) return buy_orders[i];
-  }
-  return false;
-}
-
-function num_orders() {
-  var sum = 0;
-  for (var i = 0; i < buy_orders.length; i++) {
-    sum += parseFloat(buy_orders[i].buyAmount);
-  }
-  console.log(sum);
-  return sum;
-}
-
 function stockUpdateHandler(com) {
   for (var i = 0; i < com.length; i++) {
     $("." + com[i].identifer + "_amount").text(com[i].selfOwnedSock.length);
-  }
-}
-
-function total_orders() {
-  var sum = 0;
-  for (var i = 0; i < buy_orders.length; i++) {
-    sum += parseFloat(buy_orders[i].total);
-  }
-  console.log(sum);
-  return sum;
-}
-
-function parse_shares(company) {
-  var owned_shares {
-
-  };
-  for (var i = 0; i < company.ownedShares.length; i++) {
-
   }
 }
