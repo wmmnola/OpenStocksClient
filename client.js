@@ -16,7 +16,6 @@ function main() {
     socket.on("NameRequest", showNameRequest);
     socket.on("sendData", mainGamePhase);
     socket.on("stockUpdate", stockUpdateHandler);
-    console.log("pressed");
     var data = {
       role: "player"
     }
@@ -33,7 +32,6 @@ function main() {
 function showNameRequest(data) {
   id = data;
   $("#waiting").hide();
-  console.log("got request");
   $("#namecompany").show();
   $("#namesub").click(nameMyCompany);
 }
@@ -65,7 +63,6 @@ function mainGamePhase(data) {
       button = '<td><button id=' + companies[i].identifer +
         '>buy</button></td>';
     }
-    console.log(companies[i]);
     $('#market').append('<tr class=' + companies[i].identifer + '><td>' +
       companies[i].identifer + '</td><td>' + companies[i].value + '</td><td>' +
       companies[i].sharevalue + '</td><td><p class=' +
@@ -81,7 +78,6 @@ function mainGamePhase(data) {
 function create_report() {
   $("#ownedShares").empty();
   records = [];
-  console.log(records);
   parse_shares(playerCompany);
   $("#ownedShares").append(
     "<tr><th>Company</th>" +

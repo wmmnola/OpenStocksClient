@@ -17,7 +17,6 @@ function total_orders() {
   for (var i = 0; i < buy_orders.length; i++) {
     sum += parseFloat(buy_orders[i].total);
   }
-  console.log(sum);
   return sum;
 }
 
@@ -26,7 +25,6 @@ function num_orders() {
   for (var i = 0; i < buy_orders.length; i++) {
     sum += parseFloat(buy_orders[i].buyAmount);
   }
-  console.log(sum);
   return sum;
 }
 
@@ -56,7 +54,6 @@ function parse_shares(company) {
     }
     r.amount += 1;
   }
-  console.log(records);
 }
 
 function find_sell_order(company) {

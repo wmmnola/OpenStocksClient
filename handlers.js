@@ -4,7 +4,7 @@ var sell_orders = [];
 function buyStockHandler(event) {
 
   event.stopPropagation();
-  console.log(event.target.id);
+
   var toBuy = find_by_identifer(event.target.id);
   var order = find_order(toBuy);
   if (!order) {
@@ -39,12 +39,9 @@ function sellHandler(event) {
     var i = sell_orders.indexOf(order);
     sell_orders.splice(i, 1);
   }
-  console.log(order);
-  console.log(record);
   if (order.sellAmount < record.amount) {
     order.sell();
     sell_orders.push(order);
-    console.log(sell_orders)
   } else {
     $("." + company.identifer + "_sell").hide();
   }
@@ -64,7 +61,6 @@ function endTurnHandler(event) {
 }
 
 function nameMyCompany(event) {
-  //console.log(id);
   event.stopPropagation();
   var company = $("#name").val();
   var iden = $("#identifier").val()
@@ -73,7 +69,6 @@ function nameMyCompany(event) {
     name: company,
     identity: iden
   };
-  console.log(data);
   socket.emit("NameReply", data);
 
 }
