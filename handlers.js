@@ -57,7 +57,8 @@ function endTurnHandler(event) {
   $(".endTurn").hide();
   var payload = {
     id: id,
-    buy_orders: buy_orders
+    buy_orders: buy_orders,
+    sell_orders: sell_orders
   };
   socket.emit("endTurn", payload);
 }
